@@ -6,6 +6,7 @@ import Busqueda_dorada
 import Interpolación_cuadrática
 import Metodo_de_newton
 import Busqueda_aleatoria
+import maxima_inclinacion
 
 def mostrar_menu():
     """Muestra el menú principal"""
@@ -19,6 +20,7 @@ def mostrar_menu():
     print("4. Interpolación Cuadrática")
     print("5. Método de Newton")
     print("6. Busqueda aleatoria")
+    print("7. Máxima inclinación")
     print("0. Salir")
     print("="*50)
 
@@ -53,6 +55,9 @@ def main():
 
         elif opcion == "6":
             Busqueda_aleatoria.main()
+            pass
+        elif opcion == "7":
+            maxima_inclinacion.main()
             pass
         else:
             print("Opción inválida")
