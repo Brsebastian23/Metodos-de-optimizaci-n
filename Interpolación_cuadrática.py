@@ -20,21 +20,24 @@ def f(x, ecuacion):
 def interpolacion_cuadratica(x0, x1, x2, error, ecuacion):
   max_o_min = 0
   while max_o_min != 1 and max_o_min != 2:
-    max_o_min = int(input("Si desea maximizar ingrese 1, si desea minimizar ingrese 2"))
+    max_o_min = int(input("Si desea maximizar ingrese 1, si desea minimizar ingrese 2: "))
     if max_o_min != 1 and max_o_min != 2:
       print("Ingrese un valor valido: 1 ó 2")
 
-  if max_o_min == 2:
-    if f(x1, ecuacion) < f(x0, ecuacion) or f(x1, ecuacion)<f(x2, ecuacion):
-      print("El valor x1 no cumple con las caracteristica para aplicar el metodo")
-      return
-  else:
-    if f(x1, ecuacion) > f(x0, ecuacion) or f(x1, ecuacion)<f(x2, ecuacion):
-      print("El valor x1 no cumple con las caracteristica para aplicar el metodo")
-      return
+  if not (x0 < x1 < x2):
+    print("Error: los valores deben cumplir que x0<x1<x2 para aplicar el metodo")
+    return None
 
-  if not (x0<x1<x2):
-    print("Error los valores debe cumplir que x0<x1<x2  para aplicar el metodo")
+  if max_o_min == 2:
+    # Minimizar: x1 debe ser menor que sus vecinos f(x1)<f(x0) y f(x1)<f(x2)
+    if f(x1, ecuacion) > f(x0, ecuacion) or f(x1, ecuacion) > f(x2, ecuacion):
+      print("El valor x1 no cumple las caracteristicas para aplicar el metodo (no hay minimo entre x0 y x2)")
+      return None
+  else:
+    # Maximizar: x1 debe ser mayor que sus vecinos f(x1)>f(x0) y f(x1)>f(x2)
+    if f(x1, ecuacion) < f(x0, ecuacion) or f(x1, ecuacion) < f(x2, ecuacion):
+      print("El valor x1 no cumple las caracteristicas para aplicar el metodo (no hay maximo entre x0 y x2)")
+      return None
 
   numerador = f(x0, ecuacion)*(x1**2 - x2**2) + f(x1, ecuacion)*(x2**2 - x0**2) + f(x2, ecuacion)*(x0**2 - x1**2)
   denominador = 2*f(x0, ecuacion)*(x1 - x2) + 2*f(x1, ecuacion)*(x2 - x0) + 2*f(x2, ecuacion)*(x0 - x1)
@@ -48,13 +51,13 @@ def interpolacion_cuadratica(x0, x1, x2, error, ecuacion):
 
       iteraciones += 1
       if x3>x1:
-        if f(x3)>f(x1):
+        if f(x3, ecuacion)>f(x1, ecuacion):
           x0 = x1
           x1 = x3
         else:
           x2 = x3
       else:
-        if f(x3)>f(x1):
+        if f(x3, ecuacion)>f(x1, ecuacion):
           x2 = x1
           x1 = x3
         else:
@@ -133,8 +136,8 @@ def main():
     error = float(input("Ingrese el error aceptado:  "))
     
     resultado = interpolacion_cuadratica(x0, x1, x2, error, ecuacion)
-    if isinstance(resultado, str):
-        print(resultado)
+    if resultado is None:
+        return
     else:
         x3, iteraciones, tabla, max_min  = resultado
         
@@ -149,7 +152,8 @@ def main():
         plt.axvline(x=x0, color='green', linestyle='-', linewidth=0.5)
         plt.axvline(x=x1, color='green', linestyle='-', linewidth=0.5)
         plt.axvline(x=x2, color='green', linestyle='-', linewidth=0.5)
-        plt.axhline(y=f(x3, ecuacion), color='red', linestyle='--', label=f'valor optimo = {x3:.4f}')
+        plt.axhline(y=f(x3, ecuacion), color='red', linestyle='--', label=f'f(punto optimo) = {f(x3, ecuacion):.4f}')
+        plt.axvline(x=x3, color='green', linestyle='--', label=f'punto optimo = {x3:.4f}')
         plt.legend(['optimo', 'x0', 'x1', 'x2'])
         
         
@@ -178,3 +182,8 @@ def main():
         
         # Mostrar tabla
         mostrar_tabla(tabla)
+
+
+
+if __name__ == "__main__":
+    main()

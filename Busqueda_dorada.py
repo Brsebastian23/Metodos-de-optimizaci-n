@@ -125,7 +125,8 @@ def main():
         plt.plot(x, y, 'b-', label='f(x) ='+ecuacion)
         plt.axvline(x=x_lower, color='green', linestyle='-', linewidth=0.5)
         plt.axvline(x=x_upper, color='green', linestyle='-', linewidth=0.5)
-        plt.axhline(y=f(xl,ecuacion), color='red', linestyle='--', label=f'valor optimo = {xl:.4f}')
+        plt.axhline(y=f(xl,ecuacion), color='red', linestyle='--', label=f'f(valor optimo) = {f(xl, ecuacion):.4f}')
+        plt.axvline(x=xl, color='green', linestyle='--', label=f'valor optimo = {xl:.4f}')
         
         
         plt.grid(True, alpha=0.3)

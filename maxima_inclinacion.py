@@ -6,9 +6,6 @@ import sympy as sp
 
 
 def maxima_inclinacion(x0, y0, error, ecuacion, x_l, x_u, y_l, y_u):
-    """
-    Método de máxima inclinación (ascenso) para maximizar f(x,y).
-    """
     x = sp.Symbol('x')
     y = sp.Symbol('y')
 
@@ -80,11 +77,6 @@ def maxima_inclinacion(x0, y0, error, ecuacion, x_l, x_u, y_l, y_u):
 
 
 def _hallar_h_optimo(g1, g2, gv, max_iter_bracket=40, tol=1e-10):
-    """
-    Maximiza g(h) partiendo de h=0 donde g'(0) = ||∇f||^2 > 0.
-    Camina con pasos crecientes hasta cruzar g'(h)=0, luego bisecciona
-    sobre g'(h). Verifica que g''(h_star) < 0 (máximo local).
-    """
     h0 = 0.0
 
     try:

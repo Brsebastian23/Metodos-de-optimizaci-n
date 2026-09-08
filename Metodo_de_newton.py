@@ -152,7 +152,9 @@ def main():
         
         plt.plot(x, y, 'b-', label='f(x) ='+ecuacion)
         if max_o_min == 2:
-            plt.axhline(y=funcion(k, ecuacion), color='red', linestyle='--', label=f'valor optimo = {k:.4f}')
+            plt.axvline(x=k, color='green', linestyle='--', label=f'valor optimo = {k:.4f}')
+            plt.axhline(y=funcion(k, ecuacion), color='red', linestyle='--', label=f'f(valor optimo) = {funcion(k, ecuacion):.4f}')
+
 
         else:
             plt.axvline(x=k, color='red', linestyle='--', label=f'raiz = {k:.4f}')
